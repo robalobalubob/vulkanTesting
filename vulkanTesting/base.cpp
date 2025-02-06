@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <vector>
 #include <cstring>
+#include <optional>
 
 const uint32_t WIDTH = 800;
 const uint32_t HEIGHT = 600;
@@ -36,6 +37,14 @@ void DestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerEXT
         func(instance, debugMessenger, pAllocator);
     }
 }
+
+struct QueueFamilyIndicies {
+    std::optional<uint32_t> graphicsFamily;
+
+    bool isComplete() {
+        return graphicsFamily.has_value();
+    }
+};
 
 class HelloTriangleApplication {
 public:
@@ -184,8 +193,35 @@ private:
         return deviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU &&
             deviceFeatures.geometryShader;*/
 
-        // Here we only care about vulkan support
-        return true;
+        QueueFamilyIndicies indicies = findQueueFamilies(device);
+
+        return indicies.isComplete();
+
+    }
+
+    QueueFamilyIndicies findQueueFamilies(VkPhysicalDevice device) {
+        QueueFamilyIndicies indicies;
+
+        uint32_t queueFamilyCount = 0;
+        vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, nullptr);
+
+        std::vector<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
+        vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilies, queueFamilies.data());
+
+        int i = 0;
+        for (const auto& queueFamily : queueFamilies) {
+            if (queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT) {
+                indicies.graphicsFamily = i;
+            }
+
+            if (indicies.isComplete()) {
+                break;
+            }
+
+            i++;
+        }
+
+        return indicies;
     }
 
     /*
@@ -254,6 +290,8 @@ private:
 
         return VK_FALSE;
     }
+
+    
 };
 
 int main() {
