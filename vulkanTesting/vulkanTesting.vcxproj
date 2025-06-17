@@ -112,13 +112,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\libraries\glfw-3.4.bin.WIN64\include;C:\VulkanSDK\1.4.309.0\Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\VulkanSDK\1.4.313.2\Include;C:\Users\liber\source\repos\vulkanTesting\libs\GLFW;C:\Users\liber\source\repos\vulkanTesting\libs\glm</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\libraries\glfw-3.4.bin.WIN64\lib-vc2022;C:\VulkanSDK\1.4.309.0\Lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\liber\source\repos\vulkanTesting\libs\lib-vc2022;C:\VulkanSDK\1.4.313.2\Lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>vulkan-1.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
